@@ -20,13 +20,19 @@ module.exports = {
 		ecmaVersion: 2018,
 		sourceType: 'module',
 	},
-	plugins: ['react', '@typescript-eslint'],
+	plugins: ['react', '@typescript-eslint', 'react-hooks'],
 	rules: {
-		'no-console': [
-			'error',
+		'prettier/prettier': 'error',
+		'react/jsx-filename-extension': [
+			'warn',
 			{
-				allow: ['tron'],
+				extensions: ['.jsx', '.js'],
 			},
 		],
+		'import/prefer-default-export': 'off',
+		'no-param-reassign': 'off',
+		'no-console': ['error', { allow: 'tron' }],
+		'react-hooks/rules-of-hooks': 'error',
+		'react-hooks/exhaustive-deps': 'warn',
 	},
 };
