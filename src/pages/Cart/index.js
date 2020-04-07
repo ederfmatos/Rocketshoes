@@ -5,9 +5,11 @@ import {
 	MdDelete,
 } from 'react-icons/md';
 
+import { connect } from 'react-redux';
+
 import { Container, ProductTable, Total } from './styles';
 
-export default function Cart() {
+function Cart({ cart }) {
 	return (
 		<Container>
 			<ProductTable>
@@ -22,42 +24,41 @@ export default function Cart() {
 				</thead>
 
 				<tbody>
-					<tr>
-						<td>
-							<img
-								src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-5-masculino/70/HZM-1731-270/HZM-1731-270_zoom2.jpg?ts=1573579328&ims=326x"
-								alt="Tênis"
-							/>
-						</td>
-						<td>
-							<strong>Tenis mui massa</strong>
-							<span>R$129,90</span>
-						</td>
+					{cart.map(product => (
+						<tr>
+							<td>
+								<img src={product.image} alt={product.title} />
+							</td>
+							<td>
+								<strong>{product.title}</strong>
+								<span>{product.priceFormatted}</span>
+							</td>
 
-						<td>
-							<div>
+							<td>
+								<div>
+									<button type="button">
+										<MdRemoveCircleOutline size={20} color="#7159c1" />
+									</button>
+
+									<input type="number" readOnly value={product.amount} />
+
+									<button type="button">
+										<MdAddCircleOutline size={20} color="#7159c1" />
+									</button>
+								</div>
+							</td>
+
+							<td>
+								<strong>R$ 258,80</strong>
+							</td>
+
+							<td>
 								<button type="button">
-									<MdRemoveCircleOutline size={20} color="#7159c1" />
+									<MdDelete size={20} color="#7159c1" />
 								</button>
-
-								<input type="number" readOnly value={1} />
-
-								<button type="button">
-									<MdAddCircleOutline size={20} color="#7159c1" />
-								</button>
-							</div>
-						</td>
-
-						<td>
-							<strong>R$ 258,80</strong>
-						</td>
-
-						<td>
-							<button type="button">
-								<MdDelete size={20} color="#7159c1" />
-							</button>
-						</td>
-					</tr>
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</ProductTable>
 
@@ -72,3 +73,9 @@ export default function Cart() {
 		</Container>
 	);
 }
+
+const mapStateToProps = state => ({
+	cart: state.cart,
+});
+
+export default connect(mapStateToProps)(Cart);
